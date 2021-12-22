@@ -50,13 +50,9 @@ fi
 
 # get the IMA keyring id
 
-if line=$(keyctl describe %keyring:.ima); then
-    _ima_id=${line%%:*}
-else
-    _ima_id=$(keyctl search @u keyring _ima)
-    if [ -z "${_ima_id}" ]; then
-        _ima_id=$(keyctl newring _ima @u)
-    fi
+_ima_id=$(keyctl search @u keyring _ima)
+if [ -z "${_ima_id}" ]; then
+    _ima_id=$(keyctl newring _ima @u)
 fi
 
 # load the IMA public key(s)
